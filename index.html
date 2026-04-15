@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Target Randomizer (Fixed)</title>
+  <title>Target Randomizer (PIN Version)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,13 +48,14 @@
   <div class="container">
     <h1>Target Randomizer</h1>
 
-    <input id="nameInput" type="text" placeholder="Enter your name">
+    <input id="codeInput" type="text" placeholder="Enter your code">
     <button onclick="startAssignment()">START</button>
 
     <div id="result"></div>
   </div>
 
   <script>
+    // PEOPLE LIST
     const people = [
       "Kayden Hall", "Lucas Forker", "Trevor James", "Gabriel Medina",
       "Ben Elder", "Nick Haskins", "Aaron Joseph", "Jackson Neubauer",
@@ -63,44 +64,63 @@
       "Angelina Bryk", "Nicole Semenchuck", "Charlotte Humphrey"
     ];
 
-    const peopleLower = people.map(p => p.toLowerCase());
-
-    // FIXED ASSIGNMENTS — NO RANDOMNESS
+    // FIXED ASSIGNMENTS (NO RANDOMNESS)
     const assignments = {
-      "kayden hall": "lucas forker",
-      "lucas forker": "trevor james",
-      "trevor james": "gabriel medina",
-      "gabriel medina": "ben elder",
-      "ben elder": "nick haskins",
-      "nick haskins": "aaron joseph",
-      "aaron joseph": "jackson neubauer",
-      "jackson neubauer": "bianca illescas villa",
-      "bianca illescas villa": "max gotcher",
-      "max gotcher": "madison dodge",
-      "madison dodge": "nolan garrison",
-      "nolan garrison": "brysun perry",
-      "brysun perry": "jack smith",
-      "jack smith": "david sheldon",
-      "david sheldon": "angelina bryk",
-      "angelina bryk": "nicole semenchuck",
-      "nicole semenchuck": "charlotte humphrey",
-      "charlotte humphrey": "kayden hall"
+      "Kayden Hall": "Lucas Forker",
+      "Lucas Forker": "Trevor James",
+      "Trevor James": "Gabriel Medina",
+      "Gabriel Medina": "Ben Elder",
+      "Ben Elder": "Nick Haskins",
+      "Nick Haskins": "Aaron Joseph",
+      "Aaron Joseph": "Jackson Neubauer",
+      "Jackson Neubauer": "Bianca Illescas Villa",
+      "Bianca Illescas Villa": "Max Gotcher",
+      "Max Gotcher": "Madison Dodge",
+      "Madison Dodge": "Nolan Garrison",
+      "Nolan Garrison": "Brysun Perry",
+      "Brysun Perry": "Jack Smith",
+      "Jack Smith": "David Sheldon",
+      "David Sheldon": "Angelina Bryk",
+      "Angelina Bryk": "Nicole Semenchuck",
+      "Nicole Semenchuck": "Charlotte Humphrey",
+      "Charlotte Humphrey": "Kayden Hall"
+    };
+
+    // PIN → PERSON MAPPING (YOU CAN CHANGE THESE)
+    const pins = {
+      "101": "Kayden Hall",
+      "102": "Lucas Forker",
+      "103": "Trevor James",
+      "104": "Gabriel Medina",
+      "105": "Ben Elder",
+      "106": "Nick Haskins",
+      "107": "Aaron Joseph",
+      "108": "Jackson Neubauer",
+      "109": "Bianca Illescas Villa",
+      "110": "Max Gotcher",
+      "111": "Madison Dodge",
+      "112": "Nolan Garrison",
+      "113": "Brysun Perry",
+      "114": "Jack Smith",
+      "115": "David Sheldon",
+      "116": "Angelina Bryk",
+      "117": "Nicole Semenchuck",
+      "118": "Charlotte Humphrey"
     };
 
     function startAssignment() {
-      const input = document.getElementById("nameInput").value.trim().toLowerCase();
+      const code = document.getElementById("codeInput").value.trim();
       const result = document.getElementById("result");
 
-      if (!assignments[input]) {
-        result.textContent = "Name not found.";
+      if (!pins[code]) {
+        result.textContent = "Invalid code.";
         return;
       }
 
-      const targetLower = assignments[input];
-      const targetIndex = peopleLower.indexOf(targetLower);
-      const targetProper = people[targetIndex];
+      const person = pins[code];
+      const target = assignments[person];
 
-      result.textContent = "Your target is: " + targetProper;
+      result.textContent = "Your target is: " + target;
     }
   </script>
 
