@@ -10,9 +10,8 @@
       margin: 0;
       padding: 40px;
 
-      /* BACKGROUND IMAGE */
-     background-image: url("C:\Users\scien\Downloads\1105772.jpg");
- /* ← replace with your hosted image filename */
+      /* BACKGROUND IMAGE — must be in same folder */
+      background-image: url("1105772.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -71,6 +70,17 @@
       font-weight: bold;
       color: #000;
     }
+
+    .stepBox {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .stepBox button {
+      width: 45%;
+      margin: 5px;
+    }
   </style>
 </head>
 <body>
@@ -82,17 +92,26 @@
     <button onclick="startAssignment()">START</button>
 
     <div id="result"></div>
+
+    <!-- Identity Confirmation -->
+    <div id="confirmIdentity" class="stepBox">
+      <p id="identityQuestion"></p>
+      <button onclick="confirmIdentity(true)">Yes</button>
+      <button onclick="confirmIdentity(false)">No</button>
+    </div>
+
+    <!-- Ready Check -->
+    <div id="readyCheck" class="stepBox">
+      <p>Are you ready to see your target?</p>
+      <button onclick="confirmReady(true)">Yes</button>
+      <button onclick="confirmReady(false)">No</button>
+    </div>
   </div>
 
-  <script>
-    const people = [
-      "Kayden Hall", "Lucas Forker", "Trevor James", "Gabriel Medina",
-      "Ben Elder", "Nick Haskins", "Aaron Joseph", "Jackson Neubauer",
-      "Bianca Illescas Villa", "Max Gotcher", "Madison Dodge",
-      "Nolan Garrison", "Brysun Perry", "Jack Smith", "David Sheldon",
-      "Angelina Bryk", "Nicole Semenchuck", "Charlotte Humphrey"
-    ];
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+  <script>
     const assignments = {
       "Kayden Hall": "Lucas Forker",
       "Lucas Forker": "Trevor James",
@@ -135,19 +154,61 @@
       "639254": "Charlotte Humphrey"
     };
 
+    let currentPerson = null;
+    let currentTarget = null;
+
     function startAssignment() {
       const code = document.getElementById("codeInput").value.trim();
       const result = document.getElementById("result");
+
+      document.getElementById("confirmIdentity").style.display = "none";
+      document.getElementById("readyCheck").style.display = "none";
+      result.textContent = "";
 
       if (!pins[code]) {
         result.textContent = "Invalid code.";
         return;
       }
 
-      const person = pins[code];
-      const target = assignments[person];
+      currentPerson = pins[code];
+      currentTarget = assignments[currentPerson];
 
-      result.textContent = "Your target is: " + target;
+      document.getElementById("identityQuestion").textContent =
+        `Are you ${currentPerson}?`;
+
+      document.getElementById("confirmIdentity").style.display = "block";
+    }
+
+    function confirmIdentity(isYes) {
+      document.getElementById("confirmIdentity").style.display = "none";
+
+      if (!isYes) {
+        document.getElementById("result").textContent =
+          "Please enter the correct code.";
+        return;
+      }
+
+      document.getElementById("readyCheck").style.display = "block";
+    }
+
+    function confirmReady(isYes) {
+      document.getElementById("readyCheck").style.display = "none";
+
+      if (!isYes) {
+        document.getElementById("result").textContent =
+          "Come back when you're ready.";
+        return;
+      }
+
+      // CONFETTI
+      confetti({
+        particleCount: 200,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      document.getElementById("result").textContent =
+        "Your target is: " + currentTarget;
     }
   </script>
 
