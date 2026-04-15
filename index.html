@@ -63,16 +63,37 @@
       "Angelina Bryk", "Nicole Semenchuck", "Charlotte Humphrey"
     ];
 
-    function assignTargets(list) {
-      let targets = [...list];
-      shuffle(targets);
+    const peopleLower = people.map(p => p.toLowerCase());
 
-      // Fix self-targeting
-      for (let i = 0; i < list.length; i++) {
-        if (list[i] === targets[i]) {
-          let swap = (i + 1) % list.length;
-          [targets[i], targets[swap]] = [targets[swap], targets[i]];
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    function assignTargets(list) {
+      let targets;
+
+      while (true) {
+        targets = [...list];
+        shuffle(targets);
+
+        let valid = true;
+
+        for (let i = 0; i < list.length; i++) {
+          if (list[i] === targets[i]) {
+            valid = false;
+            break;
+          }
+          let partnerIndex = list.indexOf(targets[i]);
+          if (partnerIndex !== -1 && targets[partnerIndex] === list[i]) {
+            valid = false;
+            break;
+          }
         }
+
+        if (valid) break;
       }
 
       let map = {};
@@ -82,25 +103,24 @@
       return map;
     }
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-    }
-
-    const assignments = assignTargets(people);
+    const assignments = assignTargets(peopleLower);
 
     function startAssignment() {
-      const name = document.getElementById("nameInput").value.trim();
+      const input = document.getElementById("nameInput").value.trim().toLowerCase();
       const result = document.getElementById("result");
 
-      if (!assignments[name]) {
+      const index = peopleLower.indexOf(input);
+
+      if (index === -1) {
         result.textContent = "Name not found.";
         return;
       }
 
-      result.textContent = "Your target is: " + assignments[name];
+      const targetLower = assignments[peopleLower[index]];
+      const targetIndex = peopleLower.indexOf(targetLower);
+      const targetProper = people[targetIndex];
+
+      result.textContent = "Your target is: " + targetProper;
     }
   </script>
 
