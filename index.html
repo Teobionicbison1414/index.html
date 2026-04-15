@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Target Randomizer</title>
+  <title>Target Randomizer (Fixed)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -65,58 +65,38 @@
 
     const peopleLower = people.map(p => p.toLowerCase());
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-    }
-
-    function assignTargets(list) {
-      let targets;
-
-      while (true) {
-        targets = [...list];
-        shuffle(targets);
-
-        let valid = true;
-
-        for (let i = 0; i < list.length; i++) {
-          if (list[i] === targets[i]) {
-            valid = false;
-            break;
-          }
-          let partnerIndex = list.indexOf(targets[i]);
-          if (partnerIndex !== -1 && targets[partnerIndex] === list[i]) {
-            valid = false;
-            break;
-          }
-        }
-
-        if (valid) break;
-      }
-
-      let map = {};
-      for (let i = 0; i < list.length; i++) {
-        map[list[i]] = targets[i];
-      }
-      return map;
-    }
-
-    const assignments = assignTargets(peopleLower);
+    // FIXED ASSIGNMENTS — NO RANDOMNESS
+    const assignments = {
+      "kayden hall": "lucas forker",
+      "lucas forker": "trevor james",
+      "trevor james": "gabriel medina",
+      "gabriel medina": "ben elder",
+      "ben elder": "nick haskins",
+      "nick haskins": "aaron joseph",
+      "aaron joseph": "jackson neubauer",
+      "jackson neubauer": "bianca illescas villa",
+      "bianca illescas villa": "max gotcher",
+      "max gotcher": "madison dodge",
+      "madison dodge": "nolan garrison",
+      "nolan garrison": "brysun perry",
+      "brysun perry": "jack smith",
+      "jack smith": "david sheldon",
+      "david sheldon": "angelina bryk",
+      "angelina bryk": "nicole semenchuck",
+      "nicole semenchuck": "charlotte humphrey",
+      "charlotte humphrey": "kayden hall"
+    };
 
     function startAssignment() {
       const input = document.getElementById("nameInput").value.trim().toLowerCase();
       const result = document.getElementById("result");
 
-      const index = peopleLower.indexOf(input);
-
-      if (index === -1) {
+      if (!assignments[input]) {
         result.textContent = "Name not found.";
         return;
       }
 
-      const targetLower = assignments[peopleLower[index]];
+      const targetLower = assignments[input];
       const targetIndex = peopleLower.indexOf(targetLower);
       const targetProper = people[targetIndex];
 
