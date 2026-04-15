@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target Assigner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Target Assigner</h1>
+  <div class="container">
+    <input id="nameInput" type="text" placeholder="Enter your name" />
+    <button onclick="assignTarget()">Get Target</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const assignments = {
+      "Teo": "Dom",
+      "Dom": "Rex",
+      "Rex": "Jen",
+      "Jen": "Teo"
+    };
+
+    function assignTarget() {
+      const name = document.getElementById("nameInput").value.trim();
+      const result = document.getElementById("result");
+
+      if (assignments[name]) {
+        result.textContent = "Your target is: " + assignments[name];
+      } else {
+        result.textContent = "Name not found.";
+      }
+    }
+  </script>
+</body>
+</html>
