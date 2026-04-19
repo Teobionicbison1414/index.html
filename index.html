@@ -111,106 +111,99 @@
   <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <script>
-    const assignments = {
-      "Kayden Hall": "Lucas Forker",
-      "Lucas Forker": "Trevor James",
-      "Trevor James": "Gabriel Medina",
-      "Gabriel Medina": "Ben Elder",
-      "Ben Elder": "Nick Haskins",
-      "Nick Haskins": "Aaron Joseph",
-      "Aaron Joseph": "Jackson Neubauer",
-      "Jackson Neubauer": "Bianca Illescas Villa",
-      "Bianca Illescas Villa": "Max Gotcher",
-      "Max Gotcher": "Madison Dodge",
-      "Madison Dodge": "Nolan Garrison",
-      "Nolan Garrison": "Brysun Perry",
-      "Brysun Perry": "Jack Smith",
-      "Jack Smith": "David Sheldon",
-      "David Sheldon": "Angelina Bryk",
-      "Angelina Bryk": "Nicole Semenchuck",
-      "Nicole Semenchuck": "Charlotte Humphrey",
-      "Charlotte Humphrey": "Kayden Hall"
-    };
+ <script>
+  const assignments = {
+    "Trevor James": "Gabriel Medina",
+    "Gabriel Medina": "Nick Haskins",
+    "Nick Haskins": "Aaron Joseph",
+    "Aaron Joseph": "Jackson Neubauer",
+    "Jackson Neubauer": "Bianca Illescas Villa",
+    "Bianca Illescas Villa": "Max Gotcher",
+    "Max Gotcher": "Madison Dodge",
+    "Madison Dodge": "Nolan Garrison",
+    "Nolan Garrison": "Jack Smith",
+    "Jack Smith": "David Sheldon",
+    "David Sheldon": "Angelina Bryk",
+    "Angelina Bryk": "Nicole Semenchuck",
+    "Nicole Semenchuck": "Charlotte Humphrey",
+    "Charlotte Humphrey": "Trevor James"   // closes the loop
+  };
 
-    const pins = {
-      "482193": "Kayden Hall",
-      "917540": "Lucas Forker",
-      "603821": "Trevor James",
-      "284915": "Gabriel Medina",
-      "759402": "Ben Elder",
-      "136874": "Nick Haskins",
-      "820457": "Aaron Joseph",
-      "594318": "Jackson Neubauer",
-      "218769": "Bianca Illescas Villa",
-      "847120": "Max Gotcher",
-      "310586": "Madison Dodge",
-      "965204": "Nolan Garrison",
-      "421978": "Brysun Perry",
-      "703419": "Jack Smith",
-      "558602": "David Sheldon",
-      "892731": "Angelina Bryk",
-      "147860": "Nicole Semenchuck",
-      "639254": "Charlotte Humphrey"
-    };
+  const pins = {
+    "603821": "Trevor James",
+    "284915": "Gabriel Medina",
+    "136874": "Nick Haskins",
+    "820457": "Aaron Joseph",
+    "594318": "Jackson Neubauer",
+    "218769": "Bianca Illescas Villa",
+    "847120": "Max Gotcher",
+    "310586": "Madison Dodge",
+    "965204": "Nolan Garrison",
+    "703419": "Jack Smith",
+    "558602": "David Sheldon",
+    "892731": "Angelina Bryk",
+    "147860": "Nicole Semenchuck",
+    "639254": "Charlotte Humphrey"
+  };
 
-    let currentPerson = null;
-    let currentTarget = null;
+  let currentPerson = null;
+  let currentTarget = null;
 
-    function startAssignment() {
-      const code = document.getElementById("codeInput").value.trim();
-      const result = document.getElementById("result");
+  function startAssignment() {
+    const code = document.getElementById("codeInput").value.trim();
+    const result = document.getElementById("result");
 
-      document.getElementById("confirmIdentity").style.display = "none";
-      document.getElementById("readyCheck").style.display = "none";
-      result.textContent = "";
+    document.getElementById("confirmIdentity").style.display = "none";
+    document.getElementById("readyCheck").style.display = "none";
+    result.textContent = "";
 
-      if (!pins[code]) {
-        result.textContent = "Invalid code.";
-        return;
-      }
-
-      currentPerson = pins[code];
-      currentTarget = assignments[currentPerson];
-
-      document.getElementById("identityQuestion").textContent =
-        `Are you ${currentPerson}?`;
-
-      document.getElementById("confirmIdentity").style.display = "block";
+    if (!pins[code]) {
+      result.textContent = "Invalid code.";
+      return;
     }
 
-    function confirmIdentity(isYes) {
-      document.getElementById("confirmIdentity").style.display = "none";
+    currentPerson = pins[code];
+    currentTarget = assignments[currentPerson];
 
-      if (!isYes) {
-        document.getElementById("result").textContent =
-          "Please enter the correct code.";
-        return;
-      }
+    document.getElementById("identityQuestion").textContent =
+      `Are you ${currentPerson}?`;
 
-      document.getElementById("readyCheck").style.display = "block";
-    }
+    document.getElementById("confirmIdentity").style.display = "block";
+  }
 
-    function confirmReady(isYes) {
-      document.getElementById("readyCheck").style.display = "none";
+  function confirmIdentity(isYes) {
+    document.getElementById("confirmIdentity").style.display = "none";
 
-      if (!isYes) {
-        document.getElementById("result").textContent =
-          "Come back when you're ready.";
-        return;
-      }
-
-      // CONFETTI
-      confetti({
-        particleCount: 200,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-
+    if (!isYes) {
       document.getElementById("result").textContent =
-        "Your target is: " + currentTarget;
+        "Please enter the correct code.";
+      return;
     }
-  </script>
+
+    document.getElementById("readyCheck").style.display = "block";
+  }
+
+  function confirmReady(isYes) {
+    document.getElementById("readyCheck").style.display = "none";
+
+    if (!isYes) {
+      document.getElementById("result").textContent =
+        "Come back when you're ready.";
+      return;
+    }
+
+    // CONFETTI
+    confetti({
+      particleCount: 200,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+
+    document.getElementById("result").textContent =
+      "Your target is: " + currentTarget;
+  }
+</script>
+
 
 </body>
 </html>
